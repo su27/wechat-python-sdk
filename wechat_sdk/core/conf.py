@@ -150,7 +150,8 @@ class WechatConf(object):
 
         if self.__access_token:
             now = time.time()
-            if self.__access_token_expires_at - now > 60:
+            if (not self.__access_token_expires_at
+                    or self.__access_token_expires_at - now > 7200):
                 return self.__access_token
 
         self.grant_access_token()  # 从腾讯服务器获取 access token 并更新
@@ -166,7 +167,8 @@ class WechatConf(object):
 
         if self.__jsapi_ticket:
             now = time.time()
-            if self.__jsapi_ticket_expires_at - now > 60:
+            if (not self.__jsapi_ticket_expires_at
+                    or self.__jsapi_ticket_expires_at - now > 7200):
                 return self.__jsapi_ticket
 
         self.grant_jsapi_ticket()  # 从腾讯服务器获取 jsapi ticket 并更新
